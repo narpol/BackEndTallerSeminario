@@ -1,5 +1,6 @@
 package co.com.examen.seminario.employee.domain.model;
 
+import co.com.examen.seminario.employee.domain.model.employee.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -7,13 +8,13 @@ import java.time.LocalDate;
 
 
 public class Employee {
-    private Integer document;
-    private String name;
-    private LocalDate startDay;
-    private String jobPosition;
-    private Double salary;
+    private Document document;
+    private Name name;
+    private StartDay startDay;
+    private JobPosition jobPosition;
+    private Salary salary;
 
-    public Employee(Integer document, String name, LocalDate startDay, String jobPosition, Double salary) {
+    public Employee(Document document, Name name, StartDay startDay, JobPosition jobPosition, Salary salary) {
         this.document = document;
         this.name = name;
         this.startDay = startDay;
@@ -21,23 +22,23 @@ public class Employee {
         this.salary = salary;
     }
 
-    public Integer getDocument() {
+    public Document getDocument() {
         return document;
     }
 
-    public String getName() {
+    public Name getName() {
         return name;
     }
 
-    public LocalDate getStartDay() {
+    public StartDay getStartDay() {
         return startDay;
     }
 
-    public String getJobPosition() {
+    public JobPosition getJobPosition() {
         return jobPosition;
     }
 
-    public Double getSalary() {
+    public Salary getSalary() {
         return salary;
     }
 }
