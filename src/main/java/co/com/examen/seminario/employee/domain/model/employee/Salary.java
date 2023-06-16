@@ -4,9 +4,9 @@ import lombok.Builder;
 
 @Builder
 public class Salary {
-    private Double value;
+    private Float value;
 
-    public Double getValue() {
+    public Float getValue() {
         return value;
     }
 

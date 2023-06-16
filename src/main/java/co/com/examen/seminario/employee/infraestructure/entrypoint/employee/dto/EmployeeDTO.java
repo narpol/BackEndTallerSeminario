@@ -10,9 +10,9 @@ public class EmployeeDTO {
     private String name;
     private LocalDate startDay;
     private String jobPosition;
-    private Double salary;
+    private Float salary;
 
-    public EmployeeDTO(Integer document, String name, LocalDate startDay, String jobPosition, Double salary) {
+    public EmployeeDTO(Integer document, String name, LocalDate startDay, String jobPosition, Float salary) {
         this.document = document;
         this.name = name;
         this.startDay = startDay;
@@ -36,7 +36,7 @@ public class EmployeeDTO {
         return jobPosition;
     }
 
-    public Double getSalary() {
+    public Float getSalary() {
         return salary;
     }
 
