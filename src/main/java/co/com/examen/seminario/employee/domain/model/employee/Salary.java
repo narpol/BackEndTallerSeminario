@@ -10,4 +10,10 @@ public class Salary {
         return value;
     }
 
+    @Override
+    public String toString() {
+        return "Salary{" +
+                "value=" + value +
+                '}';
+    }
 }

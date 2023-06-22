@@ -12,4 +12,11 @@ public class StartDay {
     public LocalDate getValue() {
         return value;
     }
+
+    @Override
+    public String toString() {
+        return "StartDay{" +
+                "value=" + value +
+                '}';
+    }
 }

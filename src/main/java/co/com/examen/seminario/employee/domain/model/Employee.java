@@ -41,4 +41,15 @@ public class Employee {
     public Salary getSalary() {
         return salary;
     }
+
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "document=" + document +
+                ", name=" + name +
+                ", startDay=" + startDay +
+                ", jobPosition=" + jobPosition +
+                ", salary=" + salary +
+                '}';
+    }
 }

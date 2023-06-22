@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Component
@@ -18,9 +19,8 @@ public class EmployeeHandler {
     private final EmployeeUseCase employeeUseCase;
 
     public Mono<ServerResponse> createEmployee(ServerRequest serverRequest){
-        return serverRequest
-                .bodyToMono(EmployeeDTO.class)
-                .flatMap(employeeDTO -> employeeUseCase.createEmployee(employeeDTO))
+        return serverRequest.bodyToMono(EmployeeDTO.class)
+                .flatMap(employeeDTO -> employeeUseCase.createEmployee(employeeDTO.toDomain()))
                 .flatMap(savedEmployee -> ServerResponse
                         .status(HttpStatus.CREATED)
                         .bodyValue(savedEmployee))
@@ -28,4 +28,28 @@ public class EmployeeHandler {
                         .unprocessableEntity()
                         .bodyValue(exception.getMessage()));
     }
+
+    public Mono<ServerResponse> getAllEmployee(ServerRequest serverRequest){
+        return employeeUseCase.findAllEmployee()
+                .collectList()
+                .flatMap(allEmployee -> ServerResponse
+                        .status(HttpStatus.FOUND)
+                        .bodyValue(allEmployee))
+                .onErrorResume(exception -> ServerResponse
+                        .unprocessableEntity()
+                        .bodyValue(exception.getMessage()));
+    }
+
+    /*public Mono<ServerResponse> getAllEmployee(ServerRequest serverRequest){
+        return serverRequest
+                .bodyToFlux(EmployeeDTO.class)
+                .flatMap(employeeDTO -> employeeUseCase.findAllEmployee())
+                .collectList()
+                .flatMap(allEmployee -> ServerResponse
+                        .status(HttpStatus.FOUND)
+                        .bodyValue(allEmployee))
+                .onErrorResume(exception -> ServerResponse
+                        .unprocessableEntity()
+                        .bodyValue(exception.getMessage()));
+    }*/
 }

@@ -12,4 +12,11 @@ public class JobPosition {
     public String getValue() {
         return value;
     }
+
+    @Override
+    public String toString() {
+        return "JobPosition{" +
+                "value='" + value + '\'' +
+                '}';
+    }
 }

@@ -19,57 +19,63 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class EmployeeDBO {
 
-    @Id
-    @Column("id_document")
-    private Integer document;
+    //@Id
+    private Integer id_document;
 
-    @Column("employee_name")
-    private String name;
+    private String employee_name;
 
-    @Column("start_day")
-    private LocalDate startDay;
+    private LocalDate start_day;
 
-    @Column("job_position")
-    private String jobPosition;
+    private String job_position;
 
-    @Column("salary")
     private Float salary;
 
-    public Integer getDocument() {
-        return document;
+    public Integer getId_document() {
+        return id_document;
     }
 
-    public String getName() {
-        return name;
+    public String getEmployee_name() {
+        return employee_name;
     }
 
-    public LocalDate getStartDay() {
-        return startDay;
+    public LocalDate getStart_day() {
+        return start_day;
     }
 
-    public String getJobPosition() {
-        return jobPosition;
+    public String getJob_position() {
+        return job_position;
     }
 
     public Float getSalary() {
         return salary;
     }
 
-    public Employee toDomain(){
-        return new Employee(Document.builder().value(document).build(),
-                Name.builder().value(name).build(),
-                StartDay.builder().value(startDay).build(),
-                JobPosition.builder().value(jobPosition).build(),
-                Salary.builder().value(salary).build());
+    public static Employee toDomain(EmployeeDBO employeeDBO){
+        return new Employee(Document.builder().value(employeeDBO.getId_document()).build(),
+                Name.builder().value(employeeDBO.getEmployee_name()).build(),
+                StartDay.builder().value(employeeDBO.getStart_day()).build(),
+                JobPosition.builder().value(employeeDBO.getJob_position()).build(),
+                Salary.builder().value(employeeDBO.getSalary()).build());
     }
 
     public static EmployeeDBO fromDomain(Employee employee){
-        return new EmployeeDBO(employee.getDocument().getValue(),
-                employee.getName().getValue(),
-                employee.getStartDay().getValue(),
-                employee.getJobPosition().getValue(),
-                employee.getSalary().getValue());
+        return EmployeeDBO.builder()
+                .id_document(employee.getDocument().getValue())
+                .employee_name(employee.getName().getValue())
+                .start_day(employee.getStartDay().getValue())
+                .job_position(employee.getJobPosition().getValue())
+                .salary(employee.getSalary().getValue())
+                .build();
     }
 
-
+    @Override
+    public String toString() {
+        return "EmployeeDBO{" +
+                "id_document=" + id_document +
+                ", employee_name='" + employee_name + '\'' +
+                ", start_day=" + start_day +
+                ", job_position='" + job_position + '\'' +
+                ", salary=" + salary +
+                '}';
+    }
 }

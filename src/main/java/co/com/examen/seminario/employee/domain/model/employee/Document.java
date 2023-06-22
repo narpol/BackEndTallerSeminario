@@ -9,4 +9,11 @@ public class Document {
     public Integer getValue() {
         return value;
     }
+
+    @Override
+    public String toString() {
+        return "Document{" +
+                "value=" + value +
+                '}';
+    }
 }

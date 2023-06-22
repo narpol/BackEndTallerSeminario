@@ -22,9 +22,9 @@ public class EmployeeApiRest {
     public RouterFunction<ServerResponse> userFunctionalEndpoints(EmployeeHandler employeeHandler) {
         String param = "/{id}";
         return RouterFunctions
-                .route(POST(pathBase).and(accept(MediaType.APPLICATION_JSON)), employeeHandler::createEmployee);
-                /*.andRoute(GET(pathBase).and(accept(MediaType.APPLICATION_JSON)), employeeHandler::queryUsers)
-                .andRoute(GET(pathBase.concat(param)).and(accept(MediaType.APPLICATION_JSON)), employeeHandler::queryUserById)
+                .route(POST(pathBase).and(accept(MediaType.APPLICATION_JSON)), employeeHandler::createEmployee)
+                .andRoute(GET(pathBase).and(accept(MediaType.APPLICATION_JSON)), employeeHandler::getAllEmployee);
+                /*.andRoute(GET(pathBase.concat(param)).and(accept(MediaType.APPLICATION_JSON)), employeeHandler::queryUserById)
                 .andRoute(PUT(pathBase.concat(param)).and(accept(MediaType.APPLICATION_JSON)), employeeHandler::updateUser)
                 .andRoute(DELETE(pathBase.concat(param)).and(accept(MediaType.APPLICATION_JSON)),
                         employeeHandler::deleteUser);*/
