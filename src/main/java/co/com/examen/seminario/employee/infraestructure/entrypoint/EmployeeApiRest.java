@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.reactive.CorsWebFilter;
+import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
 import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.RouterFunctions;
 import org.springframework.web.reactive.function.server.ServerResponse;
@@ -20,14 +23,30 @@ public class EmployeeApiRest {
 
     @Bean
     public RouterFunction<ServerResponse> userFunctionalEndpoints(EmployeeHandler employeeHandler) {
-        String param = "/{id}";
+        String document = "/{document}";
         return RouterFunctions
-                .route(POST(pathBase).and(accept(MediaType.APPLICATION_JSON)), employeeHandler::createEmployee)
-                .andRoute(GET(pathBase).and(accept(MediaType.APPLICATION_JSON)), employeeHandler::getAllEmployee);
-                /*.andRoute(GET(pathBase.concat(param)).and(accept(MediaType.APPLICATION_JSON)), employeeHandler::queryUserById)
-                .andRoute(PUT(pathBase.concat(param)).and(accept(MediaType.APPLICATION_JSON)), employeeHandler::updateUser)
+                .route(POST(pathBase.concat("/save")).and(accept(MediaType.APPLICATION_JSON)), employeeHandler::createEmployee)
+                .andRoute(GET(pathBase).and(accept(MediaType.APPLICATION_JSON)), employeeHandler::getAllEmployee)
+                .andRoute(GET(pathBase.concat(document)).and(accept(MediaType.APPLICATION_JSON)), employeeHandler::findEmploybyId);
+                /*.andRoute(PUT(pathBase.concat(param)).and(accept(MediaType.APPLICATION_JSON)), employeeHandler::updateUser)
                 .andRoute(DELETE(pathBase.concat(param)).and(accept(MediaType.APPLICATION_JSON)),
                         employeeHandler::deleteUser);*/
 
     }
+
+    @Bean
+    CorsWebFilter corsFilter() {
+
+        CorsConfiguration config = new CorsConfiguration();
+        // Possibly...
+        // config.applyPermitDefaultValues()
+        config.setAllowCredentials(true);
+        config.addAllowedOrigin("http://localhost:4200");
+        config.addAllowedHeader("*");
+        config.addAllowedMethod("*");
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", config);
+        return new CorsWebFilter(source);
+    }
+
 }

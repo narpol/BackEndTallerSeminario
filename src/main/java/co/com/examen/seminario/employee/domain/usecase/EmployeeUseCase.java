@@ -22,6 +22,10 @@ public class EmployeeUseCase {
         return employeeRepository.findAllEmployee();
     }
 
+    public Mono<Employee> findEmployeeByDocument(Integer document){
+        return employeeRepository.findEmployeeByDocument(document);
+    }
+
     /*public Mono<Employee> findAllEmployee(){
         return employeeRepository.findAllEmployee();
     }*/

@@ -25,7 +25,15 @@ public class EmployeeDBORepositoryAdapter implements EmployeeRepository {
     }*/
 
     @Override
-    public Flux<Employee> findAllEmployee() {
+    public Flux findAllEmployee() {
         return employeeDBORepository.findAll().map(EmployeeDBO::toDomain);
     }
+
+    @Override
+    public Mono<Employee> findEmployeeByDocument(Integer document) {
+        return employeeDBORepository.findById(document)
+                .map(EmployeeDBO::toDomain);
+    }
+
+
 }

@@ -7,6 +7,7 @@ import co.com.examen.seminario.employee.infraestructure.adapters.entity.Employee
 import co.com.examen.seminario.employee.infraestructure.entrypoint.employee.dto.EmployeeDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
@@ -30,26 +31,32 @@ public class EmployeeHandler {
     }
 
     public Mono<ServerResponse> getAllEmployee(ServerRequest serverRequest){
+
+        return ServerResponse.ok()
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(employeeUseCase.findAllEmployee()
+                        .map(emp -> EmployeeDTO.fromDomain(emp)), EmployeeDTO.class);
+/*
         return employeeUseCase.findAllEmployee()
                 .collectList()
                 .flatMap(allEmployee -> ServerResponse
                         .status(HttpStatus.FOUND)
-                        .bodyValue(allEmployee))
+                        .bodyValue(allEmployee.stream(each -> EmployeeDTO.fromDomain(each).toList())))
+                .onErrorResume(exception -> ServerResponse
+                        .unprocessableEntity()
+                        .bodyValue(exception.getMessage()));*/
+
+
+    }
+
+    public Mono<ServerResponse> findEmploybyId(ServerRequest serverRequest){
+        return  employeeUseCase.findEmployeeByDocument(Integer.valueOf(serverRequest.pathVariable("document")))
+                .map(employee -> EmployeeDTO.fromDomain(employee))
+                .flatMap(employee -> ServerResponse
+                        .status(HttpStatus.FOUND)
+                        .bodyValue(employee))
                 .onErrorResume(exception -> ServerResponse
                         .unprocessableEntity()
                         .bodyValue(exception.getMessage()));
     }
-
-    /*public Mono<ServerResponse> getAllEmployee(ServerRequest serverRequest){
-        return serverRequest
-                .bodyToFlux(EmployeeDTO.class)
-                .flatMap(employeeDTO -> employeeUseCase.findAllEmployee())
-                .collectList()
-                .flatMap(allEmployee -> ServerResponse
-                        .status(HttpStatus.FOUND)
-                        .bodyValue(allEmployee))
-                .onErrorResume(exception -> ServerResponse
-                        .unprocessableEntity()
-                        .bodyValue(exception.getMessage()));
-    }*/
 }

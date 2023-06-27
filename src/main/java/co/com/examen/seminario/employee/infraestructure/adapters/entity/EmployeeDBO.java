@@ -19,7 +19,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class EmployeeDBO {
 
-    //@Id
+    @Id
     private Integer id_document;
 
     private String employee_name;

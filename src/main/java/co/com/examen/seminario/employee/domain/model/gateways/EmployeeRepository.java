@@ -10,7 +10,9 @@ public interface EmployeeRepository {
 
     Flux<Employee> findAllEmployee();
 
-   /* Mono<Employee> findAllEmployee();*/
+    Mono<Employee> findEmployeeByDocument(Integer document);
+    //Mono<Employee> findEmployeeByName(String name);
+
 
     /*Mono<Employee> updateEmployeeByName(String name);
     Mono<Employee> updateEmployeeByDocument(Integer document);*/
